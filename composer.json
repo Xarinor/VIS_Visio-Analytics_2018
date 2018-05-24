@@ -1,0 +1,31 @@
+{
+	"name": "visionaerch/vbp",
+	"description": "Closed source framework for multiple Visionaer AG projects",
+	"type": "silverstripe-module",
+    "keywords": ["visio-core", "visionaer", "framework", "package", "fixes", "collection", "installer"],
+	"homepage": "https://bitbucket.org/visionaerch/vbp-trunk",
+	"license": "proprietary",
+	"authors": [{
+        "name": "Lukas Walliser",
+        "email": "contact@lukas-walliser.ch",
+        "role": "Lead Developer"
+    }],
+	"support": {
+		"issues": "https://bitbucket.org/visionaerch/vbp-trunk/issues"
+	},
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.6",
+        "silverstripe/cms": "~3.6.1",
+        "silverstripe/framework": "~3.6.1"
+    },
+    "require-dev": {
+        "phpunit/PHPUnit": "~3.7@stable"
+    },
+	"extra": {
+      "installer-name": "visio-core",
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
+        }
+    }
+}

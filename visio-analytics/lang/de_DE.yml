@@ -1,0 +1,23 @@
+de_DE:
+  VisioAnalytics:
+    # CMS Strings
+    DISCLAIMERTEXT: 'Popup Nachricht'
+    ACCEPTTEXT: 'Opt-In Text'
+    DECLINETEXT: 'Opt-Out Text'
+    MORETEXT: 'Infolink Titel'
+    MOREURL: 'Infolink URL'
+    MORENEWTAB: 'Infolink in neuem Tab öffnen'
+    POSITION: 'Popup Position'
+    POSTOP: 'Oben, ganze Breite'
+    POSTOPLEFT: 'Oben links'
+    POSTOPRIGHT: 'Oben rechts'
+    POSBOTTOM: 'Unten, ganze Breite'
+    POSBOTTOMLEFT: 'Unten links'
+    POSBOTTOMRIGHT: 'Unten rechts'
+    EXPIRATIONDAYS: 'Gültigkeit in Tagen'
+    # Content Fallbacks for quick install
+    FALLBACKDISCLAIMERTEXT: 'Wir verwenden die notwendigsten Cookies um die Webseite zu optimieren.'
+    FALLBACKACCEPTTEXT: 'Fortfahren'
+    FALLBACKDECLINETEXT: 'Nicht Einverstanden'
+    FALLBACKMORETEXT: 'Weitere Informationen'
+    FALLBACKMOREURL: 'https://www.visionaer.swiss/cookie-policy'

@@ -1,0 +1,14 @@
+---
+Name: visio-analytics
+After:
+  - 'framework/*'
+  - 'cms/*'
+---
+
+Page_Controller:
+  extensions:
+    - VisioAnalyticsSiteTreeExtension
+
+SiteConfig:
+  extensions:
+    - VisioAnalyticsSiteConfigExtension
