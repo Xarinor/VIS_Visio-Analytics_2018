@@ -1,12 +1,11 @@
 <%-- Visio Cookie START --%>
 
+$(window).ready(function(){
+    $(document).VisioAnalyticsTracking($TrackingCode);
+});
 
-
-VisioAnalyticsTracking($TrackingCode);
-
-
-window.google_analytics_uacct = "UA-117525463-1"
-window.google_analytics_domain_name = "none";
+<%--window.google_analytics_uacct = "UA-117525463-1"--%>
+<%--window.google_analytics_domain_name = "none";--%>
 
 <%--if (document.cookie.indexOf('VisioCookieConsent' + '=false')) {--%>
     <%--console.log('VisioCookie: Analytics loading prevented');--%>
@@ -36,7 +35,6 @@ window.google_analytics_domain_name = "none";
         <%--clearInterval(gaInterval);--%>
     <%--}--%>
 <%--},50);--%>
-$(document).ready
 
 <%--FIXED--%>
 <%--jQuery(window).on('load', function($){--%>

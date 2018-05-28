@@ -35,9 +35,9 @@ class VisioAnalyticsSiteTreeExtension extends Extension {
 
         Requirements::javascript(THIRDPARTY_DIR.'/jquery/jquery.js');
 
-        Requirements::javascript(VISIOANALYTICS_BASE.'/javascript/VisioAnalytics.js');
+        Requirements::javascriptTemplate(VISIOANALYTICS_BASE.'/javascript/VisioAnalytics.js', array("VATrackingCode" => $siteConfig->VATrackingCode));
         Requirements::css(VISIOANALYTICS_BASE.'/css/VisioAnalytics.css');
-        Requirements::customScript($visiocookietemplateloader->renderWith('VisioAnalytics'));
+//        Requirements::customScript($visiocookietemplateloader->renderWith('VisioAnalytics'));
     }
 
     private function checkForLegalPage() {

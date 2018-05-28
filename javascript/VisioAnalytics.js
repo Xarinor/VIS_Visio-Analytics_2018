@@ -6,22 +6,83 @@
 
 (function($) {
 
-$.VisioAnalyticsTracking = (function(UA) {
+jQuery(window).on('load', function($){
 
-    if (UA != null) {
+    var VATrackingCode = '$VATrackingCode';
 
+    if (VATrackingCode === '') {
+        VATrackingCode = $('html').html().match(/UA-[0-9]{4,9}-[0-9]{1,4}/);
     }
 
-    window.google_analytics_uacct = UA
-    window.google_analytics_domain_name = "none";
+    if (VATrackingCode != '') {
+        console.log(VATrackingCode);
 
-    if (getConsent() == 'declined') {
-        console.log('VisioCookie: Analytics loading prevented');
-        window['ga-disable-'+window.google_analytics_uacct] = true;
+        window.google_analytics_uacct = VATrackingCode
+        window.google_analytics_domain_name = "none";
+
+        if (document.cookie.indexOf('VisioCookieConsent' + '=false')) {
+            console.log('VisioCookie: Analytics loading prevented');
+            window['ga-disable-' + window.google_analytics_uacct] = true;
+        }
+
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        var gaScript = document.createElement('script');
+        var loaded = false;
+        gaScript.src = gaJsHost + "google-analytics.com/ga.js";
+
+        $(gaScript).load(function () {
+            loaded = true;
+            var pageTracker = _gat._getTracker(window.google_analytics_uacct);
+            _gat._anonymizeIp();
+            pageTracker._initData();
+            pageTracker._trackPageview();
+        });
+        document.body.appendChild(gaScript);
+
+        // IE 7-8 Support
+        gaInterval = setInterval(function() {
+            if (!loaded && typeof _gat != 'undefined') {
+                $(gaScript).load();
+                clearInterval(gaInterval);
+            }
+        },50);
+
+        console.log('VisioCookie: Analytics implementation found - loading VisioCookie');
+
+        $(document).VisioAnalyticsCookieNotice().init({
+            disclaimerText: "$DisclaimerText",
+            acceptText: "$AcceptText",
+            declineText: "$DeclineText",
+            moreText: "$MoreText",
+            moreURL: "$MoreURL",
+            moreNewTab: $MoreNewTab,
+            position: "$Position",
+            expirationDays: $ExpirationDays
+        });
+
+        // Consent declined by default
+        // if (document.cookie.indexOf('VisioCookieConsent' + '=true') > -1) {
+        //     console.log('VisioCookie: Consent for Analytics given - Analytics enabled');
+        // } else {
+        //     // Set disable cookie
+        //     document.cookie = 'VisioCookieConsent' + '=false; expires=Sat, 01 Mar 2042 13:37:00 UTC; path=/';
+        // }
+        // $(document).bind('user_cookie_consent_changed', function(event, object) {
+        //     if ($(object).attr('consent') == true) {
+        //         document.cookie = 'VisioCookieConsent' + '=true; expires=Sat, 01 Mar 2042 13:37:00 UTC; path=/';
+        //     }
+        // });
+
+        $(document).bind('user_cookie_consent_changed', function(event, object) {
+            if ($(object).attr('consent') == true) {
+                document.cookie = 'VisioCookieConsent' + '=true; expires=Sat, 01 Mar 2042 13:37:00 UTC; path=/';
+            }
+        });
+
+    } else {
+        console.log('VisioCookie: No Analytics implementation found');
     }
 });
-
-
 
 $.prototype.VisioAnalyticsCookieNotice = (function() {
 
@@ -128,7 +189,6 @@ $.prototype.VisioAnalyticsCookieNotice = (function() {
             $('.va-accept').click(function() {
                 setConsent('accepted');
                 closePopup();
-                console.log('accept click');
                 console.log('accept click');
             });
         }
