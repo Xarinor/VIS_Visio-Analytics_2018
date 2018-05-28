@@ -12,6 +12,7 @@ class VisioAnalyticsSiteTreeExtension extends Extension {
         $siteConfig = SiteConfig::current_site_config();
 
         $DisclaimerText = $siteConfig->VADisclaimerText ? $siteConfig->VADisclaimerText : _t('VisioCookie.FALLBACKDISCLAIMERTEXT','This website is using Cookies.');
+        $TrackingCode = $siteConfig->VATrackingCode ? $siteConfig->VATrackingCode : '';
         $AcceptText = $siteConfig->VAAcceptText ? $siteConfig->VAAcceptText : _t('VisioCookie.FALLBACKACCEPTTEXT','Accept');
         $DeclineText = $siteConfig->VADeclineText ? $siteConfig->VADeclineText : _t('VisioCookie.FALLBACKDECLINETEXT','Decline');
         $MoreText = $siteConfig->VAMoreText ? $siteConfig->VAMoreText : _t('VisioCookie.FALLBACKMORETEXT','Learn more');
@@ -22,6 +23,7 @@ class VisioAnalyticsSiteTreeExtension extends Extension {
 
         $visiocookietemplateloader = new ArrayData( array(
             'DisclaimerText' => $DisclaimerText,
+            'TrackingCode' => $TrackingCode,
             'AcceptText' => $AcceptText,
             'DeclineText' => $DeclineText,
             'MoreText' => $MoreText,
@@ -43,9 +45,7 @@ class VisioAnalyticsSiteTreeExtension extends Extension {
         $legalPage = false;
         $siteConfig = SiteConfig::current_site_config();
 
-        try {
-            $legalPage = $siteConfig->LegalLinks()->Link();
-        } catch (Exception $e) {}
+        try { $legalPage = $siteConfig->LegalLinks()->Link(); } catch (Exception $e) {}
 
         if ($legalPage == NULL) {
 

@@ -1,5 +1,6 @@
 fr_FR:
   VisioAnalytics:
+    TRACKINGCODE: 'Google Analytics Tracking Code'
     DISCLAIMERTEXT: 'Popup content text'
     ACCEPTTEXT: 'Opt-In Text'
     DECLINETEXT: 'Opt-Out Text'

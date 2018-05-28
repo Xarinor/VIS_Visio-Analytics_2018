@@ -1,6 +1,7 @@
 de_DE:
   VisioAnalytics:
     # CMS Strings
+    TRACKINGCODE: 'Google Analytics Tracking Code'
     DISCLAIMERTEXT: 'Popup Nachricht'
     ACCEPTTEXT: 'Opt-In Text'
     DECLINETEXT: 'Opt-Out Text'

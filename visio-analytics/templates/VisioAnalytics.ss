@@ -1,6 +1,10 @@
 <%-- Visio Cookie START --%>
 
 
+
+VisioAnalyticsTracking($TrackingCode);
+
+
 window.google_analytics_uacct = "UA-117525463-1"
 window.google_analytics_domain_name = "none";
 

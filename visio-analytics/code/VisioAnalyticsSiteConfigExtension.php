@@ -8,6 +8,7 @@
 class VisioAnalyticsSiteConfigExtension extends DataExtension {
 
     private static $db = array(
+        'VATrackingCode' => 'Varchar(255)',
         'VADisclaimerText' => 'HTMLText',
         'VAAcceptText' => 'Text',
         'VADeclineText' => 'Text',
@@ -19,6 +20,7 @@ class VisioAnalyticsSiteConfigExtension extends DataExtension {
     );
 
     public function updateCMSFields(FieldList $fields) {
+        $fields->addFieldToTab("Root.VisioAnalytics", TextField::create('VATrackingCode', _t('VisioAnalytics.TRACKINGCODE', 'Tracking code')));
         $fields->addFieldToTab("Root.VisioAnalytics", TextField::create('VADisclaimerText', _t('VisioAnalytics.DISCLAIMERTEXT', 'Disclaimer Text')));
         $fields->addFieldToTab("Root.VisioAnalytics", TextField::create('VAAcceptText', _t('VisioAnalytics.ACCEPTTEXT', 'Accept Text')));
         $fields->addFieldToTab("Root.VisioAnalytics", TextField::create('VADeclineText', _t('VisioAnalytics.DECLINETEXT', 'Decline Text')));
