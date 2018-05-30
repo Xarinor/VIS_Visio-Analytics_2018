@@ -1,6 +1,7 @@
 it_IT:
   VisioAnalytics:
     TRACKINGCODE: 'Google Analytics Tracking Code'
+    DISABLEPOPUP: 'Disable Cookie Popup'
     DISCLAIMERTEXT: 'Popup content text'
     ACCEPTTEXT: 'Opt-In Text'
     DECLINETEXT: 'Opt-Out Text'
@@ -8,13 +9,13 @@ it_IT:
     MOREURL: 'Detail page URL'
     MORENEWTAB: 'Open detail page in new tab'
     POSITION: 'Popup Position'
-    POSTOP: 'Top'
     POSTOPLEFT: 'Top left'
     POSTOPRIGHT: 'Top right'
     POSBOTTOM: 'Bottom'
     POSBOTTOMLEFT: 'Bottom left'
     POSBOTTOMRIGHT: 'Bottom right'
     EXPIRATIONDAYS: 'Expiration time in days'
+    # Content Fallbacks for quick install
     FALLBACKDISCLAIMERTEXT: 'Utilizziamo i cookie più necessari per garantire la funzionalità ottimale di questo sito web. '
     FALLBACKACCEPTTEXT: 'Sono d’accordo'
     FALLBACKDECLINETEXT: 'Non sono d’accordo'

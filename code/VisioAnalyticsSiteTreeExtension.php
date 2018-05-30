@@ -11,19 +11,21 @@ class VisioAnalyticsSiteTreeExtension extends Extension {
 
         $siteConfig = SiteConfig::current_site_config();
 
-        $DisclaimerText = $siteConfig->VADisclaimerText ? $siteConfig->VADisclaimerText : _t('VisioCookie.FALLBACKDISCLAIMERTEXT','This website is using Cookies.');
         $TrackingCode = $siteConfig->VATrackingCode ? $siteConfig->VATrackingCode : '';
-        $AcceptText = $siteConfig->VAAcceptText ? $siteConfig->VAAcceptText : _t('VisioCookie.FALLBACKACCEPTTEXT','Accept');
-        $DeclineText = $siteConfig->VADeclineText ? $siteConfig->VADeclineText : _t('VisioCookie.FALLBACKDECLINETEXT','Decline');
-        $MoreText = $siteConfig->VAMoreText ? $siteConfig->VAMoreText : _t('VisioCookie.FALLBACKMORETEXT','Learn more');
-        $MoreURL = $siteConfig->VAMoreURL ? $siteConfig->VAMoreURL : ($this->checkForLegalPage() != false ? $this->checkForLegalPage() : _t('VisioCookie.FALLBACKMOREURL','https://www.visionaer.swiss/cookie-policy'));
+        $DisablePopup = $siteConfig->VADisablePopup ? $siteConfig->VADisablePopup : 0;
+        $DisclaimerText = $siteConfig->VADisclaimerText ? $siteConfig->VADisclaimerText : _t('VisioAnalytics.FALLBACKDISCLAIMERTEXT','This website is using Cookies.');
+        $AcceptText = $siteConfig->VAAcceptText ? $siteConfig->VAAcceptText : _t('VisioAnalytics.FALLBACKACCEPTTEXT','Accept');
+        $DeclineText = $siteConfig->VADeclineText ? $siteConfig->VADeclineText : _t('VisioAnalytics.FALLBACKDECLINETEXT','Decline');
+        $MoreText = $siteConfig->VAMoreText ? $siteConfig->VAMoreText : _t('VisioAnalytics.FALLBACKMORETEXT','Learn more');
+        $MoreURL = $siteConfig->VAMoreURL ? $siteConfig->VAMoreURL : ($this->checkForLegalPage() != false ? $this->checkForLegalPage() : _t('VisioAnalytics.FALLBACKMOREURL','https://www.visionaer.swiss/cookie-policy'));
         $MoreNewTab = $siteConfig->VAMoreNewTab ? $siteConfig->VAMoreNewTab : ($this->checkForLegalPage() != false ? 'false' : 'true');
         $Position = $siteConfig->VAPosition ? $siteConfig->VAPosition : 'bottomleft';
         $ExpirationDays = $siteConfig->VAExpirationDays ? $siteConfig->VAExpirationDays : 14;
 
-        $visiocookietemplateloader = new ArrayData( array(
-            'DisclaimerText' => $DisclaimerText,
+        $visioAnalyticsTemplateData = array(
             'TrackingCode' => $TrackingCode,
+            'DisablePopup' => $DisablePopup,
+            'DisclaimerText' => $DisclaimerText,
             'AcceptText' => $AcceptText,
             'DeclineText' => $DeclineText,
             'MoreText' => $MoreText,
@@ -31,13 +33,13 @@ class VisioAnalyticsSiteTreeExtension extends Extension {
             'MoreNewTab' => $MoreNewTab,
             'Position' => $Position,
             'ExpirationDays' => $ExpirationDays
-        ));
+        );
 
         Requirements::javascript(THIRDPARTY_DIR.'/jquery/jquery.js');
 
-        Requirements::javascriptTemplate(VISIOANALYTICS_BASE.'/javascript/VisioAnalytics.js', array("VATrackingCode" => $siteConfig->VATrackingCode));
+        Requirements::javascript(VISIOANALYTICS_BASE.'/javascript/VisioAnalytics.js');
+        Requirements::javascriptTemplate(VISIOANALYTICS_BASE.'/javascript/VisioAnalyticsTemplate.js', $visioAnalyticsTemplateData);
         Requirements::css(VISIOANALYTICS_BASE.'/css/VisioAnalytics.css');
-//        Requirements::customScript($visiocookietemplateloader->renderWith('VisioAnalytics'));
     }
 
     private function checkForLegalPage() {

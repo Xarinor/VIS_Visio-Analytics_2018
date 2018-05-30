@@ -6,23 +6,42 @@
 
 (function($) {
 
-jQuery(window).on('load', function($){
+var nsVisioAnalytics;
 
-    var VATrackingCode = '$VATrackingCode';
+nsVisioAnalytics = {
+    initVisioAnalytics: function (trackingCode) {
 
-    if (VATrackingCode === '') {
-        VATrackingCode = $('html').html().match(/UA-[0-9]{4,9}-[0-9]{1,4}/);
-    }
+        var VATrackingCode = '';
+        var htmlTrackingCode = $('html').html().match(/, ('UA-[0-9]{4,9}-[0-9]{1,4})/);
+        trackingCode = trackingCode.match(/UA-[0-9]{4,9}-[0-9]{1,4}/);
+        var htmlTagmanager = $('html').html().match(/GTM-[A-Z0-9]{2,20}/);
 
-    if (VATrackingCode != '') {
-        console.log(VATrackingCode);
+        if (htmlTagmanager != null) {
+            console.log('DSGVO: Tagmanager found ('+htmlTagmanager[0]+')');
+        }
+        if (trackingCode != null) {
+            if (htmlTrackingCode != null) {
+                console.log('DSGVO: Remove Leftover snippet ('+htmlTrackingCode[1]+')');
+            }
+            VATrackingCode = trackingCode;
+        } else if (htmlTrackingCode != null) {
+            console.log('DSGVO: Using Analytics Snippet');
+            var anonymized = $('html').html().match(/'anonymize[_]?[iI]p'[,:] true/);
+            if (anonymized == null) {
+                console.log('DSGVO: Missing IP Anonymization')
+            }
+            VATrackingCode = htmlTrackingCode[1];
+        } else {
+            console.log('DSGVO: No Analytics found');
+            return;
+        }
 
         window.google_analytics_uacct = VATrackingCode
         window.google_analytics_domain_name = "none";
 
-        if (document.cookie.indexOf('VisioCookieConsent' + '=false')) {
-            console.log('VisioCookie: Analytics loading prevented');
-            window['ga-disable-' + window.google_analytics_uacct] = true;
+        if (this.getConsent() == 'declined') {
+            console.log('Visio-Analytics: Analytics data link terminated');
+            window['ga-disable-' + VATrackingCode] = true;
         }
 
         var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
@@ -32,7 +51,7 @@ jQuery(window).on('load', function($){
 
         $(gaScript).load(function () {
             loaded = true;
-            var pageTracker = _gat._getTracker(window.google_analytics_uacct);
+            var pageTracker = _gat._getTracker(VATrackingCode);
             _gat._anonymizeIp();
             pageTracker._initData();
             pageTracker._trackPageview();
@@ -40,49 +59,48 @@ jQuery(window).on('load', function($){
         document.body.appendChild(gaScript);
 
         // IE 7-8 Support
-        gaInterval = setInterval(function() {
+        gaInterval = setInterval(function () {
             if (!loaded && typeof _gat != 'undefined') {
                 $(gaScript).load();
                 clearInterval(gaInterval);
             }
-        },50);
-
-        console.log('VisioCookie: Analytics implementation found - loading VisioCookie');
-
-        $(document).VisioAnalyticsCookieNotice().init({
-            disclaimerText: "$DisclaimerText",
-            acceptText: "$AcceptText",
-            declineText: "$DeclineText",
-            moreText: "$MoreText",
-            moreURL: "$MoreURL",
-            moreNewTab: $MoreNewTab,
-            position: "$Position",
-            expirationDays: $ExpirationDays
-        });
+        }, 50);
 
         // Consent declined by default
-        // if (document.cookie.indexOf('VisioCookieConsent' + '=true') > -1) {
-        //     console.log('VisioCookie: Consent for Analytics given - Analytics enabled');
+        // if (document.cookie.indexOf('VisioAnalyticsConsent' + '=true') > -1) {
+        //     console.log('Visio-Analytics: Consent for Analytics given - Analytics enabled');
         // } else {
         //     // Set disable cookie
-        //     document.cookie = 'VisioCookieConsent' + '=false; expires=Sat, 01 Mar 2042 13:37:00 UTC; path=/';
+        //     doument.cookie = 'Visio-AnalyticsConsent' + '=false; expires=Sat, 01 Mar 2042 13:37:00 UTC; path=/';
         // }
-        // $(document).bind('user_cookie_consent_changed', function(event, object) {
-        //     if ($(object).attr('consent') == true) {
-        //         document.cookie = 'VisioCookieConsent' + '=true; expires=Sat, 01 Mar 2042 13:37:00 UTC; path=/';
-        //     }
-        // });
+    },
+    getCookie: function (name) {
+        var value = "; " + document.cookie;
+        var parts = value.split("; " + name + "=");
+        if (parts.length == 2) {
+            return parts.pop().split(";").shift();
+        } else {
+            return null;
+        }
+    },
+    setConsent: function (consent,expirationDays) {
+        // Internet Explorer ie6, ie7, and ie8 do not support “max-age”, while (mostly) all browsers support expires
+        // var expiryTime = $this.config.expirationDays*60*60*24;
+        // document.cookie = 'VisioAnalyticsConsent' + '=' + consent + "; max-age=" + expiryTime + ";path=/";
+        var d = new Date();
+        d.setTime(d.getTime() + parseInt(expirationDays) * 1000 * 60 * 60 * 24); // in milliseconds
+        document.cookie = 'VisioAnalyticsConsent=' + consent + '; expires=' + d.toGMTString() + ";path=/";
+    },
+    getConsent: function () {
+        var consent = false;
+        $currentConsentCookie = this.getCookie('VisioAnalyticsConsent');
+        if ($currentConsentCookie != undefined) consent = $currentConsentCookie;
 
-        $(document).bind('user_cookie_consent_changed', function(event, object) {
-            if ($(object).attr('consent') == true) {
-                document.cookie = 'VisioCookieConsent' + '=true; expires=Sat, 01 Mar 2042 13:37:00 UTC; path=/';
-            }
-        });
-
-    } else {
-        console.log('VisioCookie: No Analytics implementation found');
+        return consent;
     }
-});
+};
+
+window.visioAnalytics = nsVisioAnalytics;
 
 $.prototype.VisioAnalyticsCookieNotice = (function() {
 
@@ -98,6 +116,7 @@ $.prototype.VisioAnalyticsCookieNotice = (function() {
         position: 'bottomleft',
         expirationDays: '14'
     };
+
     $this.loaded = false;
 
     var overwriteConfig = function(customConfig) {
@@ -125,37 +144,36 @@ $.prototype.VisioAnalyticsCookieNotice = (function() {
         if (typeof customConfig.expirationDays !== 'undefined') {
             $this.config.expirationDays = customConfig.expirationDays;
         }
-        console.log('overwriteConfig:'+customConfig);
     }
 
-    var setConsent = function(consent) {
-        // Internet Explorer ie6, ie7, and ie8 do not support “max-age”, while (mostly) all browsers support expires
-        // var expiryTime = $this.config.expirationDays*60*60*24;
-        // document.cookie = 'VisioAnalyticsConsent' + '=' + consent + "; max-age=" + expiryTime + ";path=/";
-        var d = new Date();
-        d.setTime(d.getTime() + $this.config.expirationDays*1000*60*60*24); // in milliseconds
-        document.cookie = 'VisioAnalyticsConsent=' + consent + '; expires=' + d.toGMTString() + ";path=/";
-    };
+    // var setConsent = function(consent) {
+    //     // Internet Explorer ie6, ie7, and ie8 do not support “max-age”, while (mostly) all browsers support expires
+    //     // var expiryTime = $this.config.expirationDays*60*60*24;
+    //     // document.cookie = 'VisioAnalyticsConsent' + '=' + consent + "; max-age=" + expiryTime + ";path=/";
+    //     var d = new Date();
+    //     d.setTime(d.getTime() + $this.config.expirationDays*1000*60*60*24); // in milliseconds
+    //     document.cookie = 'VisioAnalyticsConsent=' + consent + '; expires=' + d.toGMTString() + ";path=/";
+    // };
 
     var forTemplate = function() {
 
         var popupHtml =
-            '<div class="visio-analytics-cookie-notice" ' + $this.config.position + '>' +
+            '<div class="visio-analytics-cookie-notice ' + $this.config.position + '">' +
                 '<p class="va-disclaimer">' +
                     $this.config.disclaimerText +
-                    '<a class="va-more" href="' + $this.config.moreURL + '"' + ($this.config.moreNewTab ? ' target="_blank"' : '')+ '>' +
+                    ' <a class="va-more" href="' + $this.config.moreURL + '"' + ($this.config.moreNewTab ? ' target="_blank"' : '')+ '>' +
                         $this.config.moreText +
                     '</a>' +
                 '</p>' +
                 '<div class="va-actions">' +
-                    '<p class="va-decline">' +
+                    '<p class="va-decline a">' +
                         $this.config.declineText +
                     '</p>' +
                     '<p class="va-accept button">'+
                         $this.config.acceptText +
                     '</p>' +
-                    '<div class="clear"></div>' +
                 '</div>' +
+                '<div class="clear"></div>' +
             '</div>';
 
         return popupHtml;
@@ -171,46 +189,26 @@ $.prototype.VisioAnalyticsCookieNotice = (function() {
     var VisioAnalyticsCookieNoticePopup = {
 
         init : function(config) {
-
             overwriteConfig(config);
 
-            if (getConsent() != false || $this.loaded) {
+            if (visioAnalytics.getConsent() != false || $this.loaded) {
                 return;
             }
             $this.loaded = true;
 
             $('body').append(forTemplate());
 
-            $('.va-decline').click(function() {
-                setConsent('declined');
+            $('.va-decline').on('click touch', function() {
+                visioAnalytics.setConsent('declined',$this.config.expirationDays);
                 closePopup();
-                console.log('decline click');
             });
-            $('.va-accept').click(function() {
-                setConsent('accepted');
+            $('.va-accept').on('click touch', function() {
+                visioAnalytics.setConsent('accepted',365);
                 closePopup();
-                console.log('accept click');
             });
         }
     };
-
     return VisioAnalyticsCookieNoticePopup;
 });
-
-function getCookie(name) {
-    var value = "; " + document.cookie;
-    var parts = value.split("; " + name + "=");
-    if (parts.length == 2) return parts.pop().split(";").shift();
-}
-
-function getConsent() {
-
-    var consent = false;
-    $currentConsentCookie = getCookie('VisioAnalyticsConsent');
-
-    if ($currentConsentCookie != undefined) consent = $currentConsentCookie;
-
-    return consent;
-};
 
 }(jQuery));

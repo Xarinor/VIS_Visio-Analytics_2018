@@ -2,6 +2,7 @@ de_DE:
   VisioAnalytics:
     # CMS Strings
     TRACKINGCODE: 'Google Analytics Tracking Code'
+    DISABLEPOPUP: 'Cookie-Banner deaktiviert'
     DISCLAIMERTEXT: 'Popup Nachricht'
     ACCEPTTEXT: 'Opt-In Text'
     DECLINETEXT: 'Opt-Out Text'
@@ -9,7 +10,6 @@ de_DE:
     MOREURL: 'Infolink URL'
     MORENEWTAB: 'Infolink in neuem Tab öffnen'
     POSITION: 'Popup Position'
-    POSTOP: 'Oben, ganze Breite'
     POSTOPLEFT: 'Oben links'
     POSTOPRIGHT: 'Oben rechts'
     POSBOTTOM: 'Unten, ganze Breite'
@@ -17,8 +17,8 @@ de_DE:
     POSBOTTOMRIGHT: 'Unten rechts'
     EXPIRATIONDAYS: 'Gültigkeit in Tagen'
     # Content Fallbacks for quick install
-    FALLBACKDISCLAIMERTEXT: 'Wir verwenden die notwendigsten Cookies um die Webseite zu optimieren.'
+    FALLBACKDISCLAIMERTEXT: 'Wir verwenden Cookies und Analytics ausschliesslich um die Benutzerfreundlichkeit dieser Webseite zu optimieren.'
     FALLBACKACCEPTTEXT: 'Fortfahren'
-    FALLBACKDECLINETEXT: 'Nicht Einverstanden'
-    FALLBACKMORETEXT: 'Weitere Informationen'
+    FALLBACKDECLINETEXT: 'Ablehnen'
+    FALLBACKMORETEXT: ' Unsere Datenschutzerklärung'
     FALLBACKMOREURL: 'https://www.visionaer.swiss/cookie-policy'
