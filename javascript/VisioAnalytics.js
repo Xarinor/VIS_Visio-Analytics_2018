@@ -175,8 +175,6 @@ $.prototype.VisioAnalyticsCookieNotice = (function() {
 
         var backgroundStyle = $this.config.backgroundColor !== '' ? ' style="background-color:'+$this.config.backgroundColor+'"' : '';
         var textStyle = $this.config.textColor !== '' ? ' style="color:'+$this.config.textColor+'"' : '';
-        var buttonStyle = $this.config.buttonColor !== '' ? ' style="background-color:'+$this.config.buttonColor+'"' : '';
-
         var buttonStyle = 'style="' +
             ($this.config.buttonTextColor !== '' ? ' color:'+$this.config.buttonTextColor + ';' : '') +
             ($this.config.buttonColor !== '' ? ' background-color:'+$this.config.buttonColor + ';' : '') + '"';
