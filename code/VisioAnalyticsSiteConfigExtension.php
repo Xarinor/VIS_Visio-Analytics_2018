@@ -13,6 +13,10 @@ class VisioAnalyticsSiteConfigExtension extends DataExtension {
         'VADisclaimerText' => 'HTMLText',
         'VAAcceptText' => 'Text',
         'VADeclineText' => 'Text',
+        'VABackgroundColor' => 'Varchar(7)',
+        'VATextColor' => 'Varchar(7)',
+        'VAButtonColor' => 'Varchar(7)',
+        'VAButtonTextColor' => 'Varchar(7)',
         'VAMoreText' => 'Text',
         'VAMoreURL' => 'Varchar(255)',
         'VAMoreNewTab' => 'Boolean',
@@ -45,6 +49,12 @@ class VisioAnalyticsSiteConfigExtension extends DataExtension {
         $fields->addFieldToTab('Root.VisioAnalytics', FieldGroup::create(
             TextField::create('VAAcceptText', _t('VisioAnalytics.ACCEPTTEXT', 'Accept Text')),
             TextField::create('VADeclineText', _t('VisioAnalytics.DECLINETEXT', 'Decline Text'))
+        ));
+        $fields->addFieldToTab('Root.VisioAnalytics', FieldGroup::create(
+            TextField::create('VABackgroundColor', _t('VisioAnalytics.BGCOLOR', 'Backround Color')),
+            TextField::create('VATextColor', _t('VisioAnalytics.TXTCOLOR', 'Text Color')),
+            TextField::create('VAButtonColor', _t('VisioAnalytics.BTNCOLOR', 'Button Color')),
+            TextField::create('VAButtonTextColor', _t('VisioAnalytics.BTNTXTCOLOR', 'Button Color'))
         ));
     }
 }

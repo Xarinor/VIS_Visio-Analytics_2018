@@ -19,7 +19,11 @@ $(window).on('load', function(){
             moreURL: "$MoreURL",
             moreNewTab: $MoreNewTab,
             position: "$Position",
-            expirationDays: '$ExpirationDays'
+            expirationDays: '$ExpirationDays',
+            backgroundColor: '$BackgroundColor',
+            textColor: '$TextColor',
+            buttonColor: '$ButtonColor',
+            buttonTextColor: '$ButtonTextColor'
         });
     }
 

@@ -32,7 +32,11 @@ class VisioAnalyticsSiteTreeExtension extends Extension {
             'MoreURL' => $MoreURL,
             'MoreNewTab' => $MoreNewTab,
             'Position' => $Position,
-            'ExpirationDays' => $ExpirationDays
+            'ExpirationDays' => $ExpirationDays,
+            'BackgroundColor' => $siteConfig->VABackgroundColor,
+            'TextColor' => $siteConfig->VATextColor,
+            'ButtonColor' => $siteConfig->VAButtonColor,
+            'ButtonTextColor' => $siteConfig->VAButtonTextColor
         );
 
         Requirements::javascript(THIRDPARTY_DIR.'/jquery/jquery.js');

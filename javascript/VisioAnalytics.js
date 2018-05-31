@@ -114,7 +114,11 @@ $.prototype.VisioAnalyticsCookieNotice = (function() {
         moreURL: 'https://www.visionaer.swiss/cookie-policy',
         moreNewTab: true,
         position: 'bottomleft',
-        expirationDays: '14'
+        expirationDays: '14',
+        backgroundColor: '',
+        textColor: '',
+        buttonColor: '',
+        buttonTextColor: ''
     };
 
     $this.loaded = false;
@@ -144,6 +148,18 @@ $.prototype.VisioAnalyticsCookieNotice = (function() {
         if (typeof customConfig.expirationDays !== 'undefined') {
             $this.config.expirationDays = customConfig.expirationDays;
         }
+        if (typeof customConfig.backgroundColor !== '') {
+            $this.config.backgroundColor = customConfig.backgroundColor;
+        }
+        if (typeof customConfig.textColor !== '') {
+            $this.config.textColor = customConfig.textColor;
+        }
+        if (typeof customConfig.buttonColor !== '') {
+            $this.config.buttonColor = customConfig.buttonColor;
+        }
+        if (typeof customConfig.buttonTextColor !== '') {
+            $this.config.buttonTextColor = customConfig.buttonTextColor;
+        }
     }
 
     // var setConsent = function(consent) {
@@ -157,19 +173,27 @@ $.prototype.VisioAnalyticsCookieNotice = (function() {
 
     var forTemplate = function() {
 
+        var backgroundStyle = $this.config.backgroundColor !== '' ? ' style="background-color:'+$this.config.backgroundColor+'"' : '';
+        var textStyle = $this.config.textColor !== '' ? ' style="color:'+$this.config.textColor+'"' : '';
+        var buttonStyle = $this.config.buttonColor !== '' ? ' style="background-color:'+$this.config.buttonColor+'"' : '';
+
+        var buttonStyle = 'style="' +
+            ($this.config.buttonTextColor !== '' ? ' color:'+$this.config.buttonTextColor + ';' : '') +
+            ($this.config.buttonColor !== '' ? ' background-color:'+$this.config.buttonColor + ';' : '') + '"';
+
         var popupHtml =
-            '<div class="visio-analytics-cookie-notice ' + $this.config.position + '">' +
-                '<p class="va-disclaimer">' +
+            '<div class="visio-analytics-cookie-notice ' + $this.config.position + '"' + backgroundStyle + '>' +
+                '<p class="va-disclaimer"' + textStyle + '>' +
                     $this.config.disclaimerText +
-                    ' <a class="va-more" href="' + $this.config.moreURL + '"' + ($this.config.moreNewTab ? ' target="_blank"' : '')+ '>' +
+                    ' <a class="va-more" href="' + $this.config.moreURL + '"' + ($this.config.moreNewTab ? ' target="_blank"' : '') + textStyle + '>' +
                         $this.config.moreText +
                     '</a>' +
                 '</p>' +
                 '<div class="va-actions">' +
-                    '<p class="va-decline a">' +
+                    '<p class="va-decline a"' + textStyle + '>' +
                         $this.config.declineText +
                     '</p>' +
-                    '<p class="va-accept button">'+
+                    '<p class="va-accept button"' + buttonStyle + '>'+
                         $this.config.acceptText +
                     '</p>' +
                 '</div>' +
