@@ -20,7 +20,7 @@ class VisioAnalyticsSiteTreeExtension extends Extension {
         $MoreURL = $siteConfig->VAMoreURL ? $siteConfig->VAMoreURL : ($this->checkForLegalPage() != false ? $this->checkForLegalPage() : _t('VisioAnalytics.FALLBACKMOREURL','https://www.visionaer.swiss/cookie-policy'));
         $MoreNewTab = $siteConfig->VAMoreNewTab ? $siteConfig->VAMoreNewTab : ($this->checkForLegalPage() != false ? 'false' : 'true');
         $Position = $siteConfig->VAPosition ? $siteConfig->VAPosition : 'bottomleft';
-        $ExpirationDays = $siteConfig->VAExpirationDays ? $siteConfig->VAExpirationDays : 14;
+        $ExpirationDays = ($siteConfig->VAExpirationDays && $siteConfig->VAExpirationDays != 0) ? $siteConfig->VAExpirationDays : 14;
 
         $visioAnalyticsTemplateData = array(
             'TrackingCode' => $TrackingCode,

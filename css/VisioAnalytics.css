@@ -9,11 +9,13 @@
 .visio-analytics-cookie-notice p,
 .visio-analytics-cookie-notice a,
 .visio-analytics-cookie-notice a:hover,
+.visio-analytics-cookie-notice a:visited,
 .visio-analytics-cookie-notice .a {
   color: #fff;
   font-family: helvetica, arial, verdana, sans-serif;
   font-size: 14px;
   line-height: 22px;
+  margin: 0;
 }
 .visio-analytics-cookie-notice a,
 .visio-analytics-cookie-notice .a {
@@ -22,13 +24,15 @@
   white-space: nowrap;
 }
 .visio-analytics-cookie-notice .a {
-  margin: 18px 20px 0 0;
+  margin: 10px 20px 0 0;
 }
 .visio-analytics-cookie-notice .button {
   color: #3b4045;
   background-color: #fff;
   white-space: nowrap;
   float: right;
+  padding: 5px 20px;
+  cursor: pointer;
 }
 .visio-analytics-cookie-notice .va-actions {
   margin-top: 10px;
