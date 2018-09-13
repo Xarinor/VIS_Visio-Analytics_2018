@@ -209,11 +209,11 @@
 
                 $('body').append(forTemplate());
 
-                $('.va-decline').on('click touch', function() {
+                $('.va-decline, .va-decline-consent').on('click touch', function() {
                     visioAnalytics.setConsent('declined',$this.config.expirationDays);
                     closePopup();
                 });
-                $('.va-accept').on('click touch', function() {
+                $('.va-accept, .va-accept-consent').on('click touch', function() {
                     visioAnalytics.setConsent('accepted',365);
                     closePopup();
                 });
