@@ -1,13 +1,26 @@
 <?php
 
 /**
- * Visio Analytics Settings Overwrite
- * Copyright (C) 2018, Visionaer AG
- * @author Lukas Walliser <contact@lukas-walliser.ch>
+ * LICENSE
+ * Copyright (C) 2018, Visionaer AG - Lukas Walliser (Xarinor) - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited Proprietary and confidential
+ * Written by Lukas Walliser <contact@lukas-walliser.ch>
  */
-class VisioAnalyticsSiteConfigExtension extends DataExtension {
 
-    private static $db = array(
+namespace VIS\analytics;
+
+use SilverStripe\Forms\CheckboxField;
+use SilverStripe\Forms\DropdownField;
+use SilverStripe\Forms\FieldGroup;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\NumericField;
+use SilverStripe\Forms\TextareaField;
+use SilverStripe\Forms\TextField;
+use SilverStripe\ORM\DataExtension;
+
+class SiteConfigExtension extends DataExtension {
+
+    private static $db = [
         'VATrackingCode' => 'Varchar(255)',
         'VADisablePopup' => 'Boolean',
         'VADisclaimerText' => 'HTMLText',
@@ -22,7 +35,7 @@ class VisioAnalyticsSiteConfigExtension extends DataExtension {
         'VAMoreNewTab' => 'Boolean',
         'VAPosition' => 'Text',
         'VAExpirationDays' => 'Int'
-    );
+    ];
 
     public function updateCMSFields(FieldList $fields) {
 

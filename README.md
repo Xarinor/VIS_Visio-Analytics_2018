@@ -1,7 +1,6 @@
 # VisioAnalytics
 
 ## Simple Silverstripe Analytics Module for simple DSGVO / GDPR implementations
-
 This module allows users to add cookie consent and Analytics opt-out functionality by drag and drop/dev-build only.
 - The module uses the config from admin -> settings -> VisioAnalytics or tries to work with an existing Google Analytics snippet.
 - The console notifies you about existing Google Tagmanager implementations and warns you when there is no ip-anonymization set up.
@@ -13,17 +12,30 @@ Back end control is provided by a simple CMS filter.
 Also, please [report any issues](mailto:contact@lukas-walliser.ch) you may encounter!
 
 ## Credits and Authors
-
  * This module was created for Visionaer AG <www.visionaer.swiss>
  * Lukas Walliser - <contact@lukas-walliser.ch>
 
 ## Requirements
+#### Mandatory
+ - [SilverStripe ~4.0](http://www.silverstripe.org/stable-download/)
 
- * SilverStripe 3.2.0 or above
- * PHP 5.6 or above
+## Installation
+Use [composer](https://getcomposer.org/) to install the module and all its dependencies.
+
+    composer require xx
+    
+If the above fails (composer complains about no matching packages when resolving requirements), then open up your `composer.json` file and add `"minimum-stability": "dev"` in the "root" of the JSON structure: 
+    
+    {
+        "minimum-stability": "dev",
+        ... 
+    }
+    
+After doing so, run the composer require command again and it should successfully install the module and all requirements.
+If you don't use composer, make sure you install at least the modules that are listed as "mandatory" under **Requirements**
+After installing, make sure you rebuild the database and flush the cache (`dev/build?flush=1`).
  
  ## License
- 
  Revised BSD License
  
  Copyright (c) 2018, Visionaer AG & Lukas Walliser

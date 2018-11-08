@@ -1,11 +1,21 @@
 <?php
 
 /**
- * Visio Analytics include Extension
- * Copyright (C) 2018, Visionaer AG
- * @author Lukas Walliser <contact@lukas-walliser.ch>
+ * LICENSE
+ * Copyright (C) 2018, Visionaer AG - Lukas Walliser (Xarinor) - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited Proprietary and confidential
+ * Written by Lukas Walliser <contact@lukas-walliser.ch>
  */
-class VisioAnalyticsSiteTreeExtension extends Extension {
+
+namespace VIS\analytics;
+
+use Exception;
+use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Core\Extension;
+use SilverStripe\SiteConfig\SiteConfig;
+use SilverStripe\View\Requirements;
+
+class SiteTreeExtension extends Extension {
 
     public function onAfterInit() {
 
@@ -22,7 +32,7 @@ class VisioAnalyticsSiteTreeExtension extends Extension {
         $Position = $siteConfig->VAPosition ? $siteConfig->VAPosition : 'bottomleft';
         $ExpirationDays = ($siteConfig->VAExpirationDays && $siteConfig->VAExpirationDays != 0) ? $siteConfig->VAExpirationDays : 14;
 
-        $visioAnalyticsTemplateData = array(
+        $visioAnalyticsTemplateData = [
             'TrackingCode' => $TrackingCode,
             'DisablePopup' => $DisablePopup,
             'DisclaimerText' => $DisclaimerText,
@@ -37,9 +47,9 @@ class VisioAnalyticsSiteTreeExtension extends Extension {
             'TextColor' => $siteConfig->VATextColor,
             'ButtonColor' => $siteConfig->VAButtonColor,
             'ButtonTextColor' => $siteConfig->VAButtonTextColor
-        );
+        ];
 
-        Requirements::javascript(THIRDPARTY_DIR.'/jquery/jquery.js');
+//        Requirements::javascript(THIRDPARTY_DIR.'/jquery/jquery.js');
 
         Requirements::javascript(VISIOANALYTICS_BASE.'/javascript/VisioAnalytics.js');
         Requirements::javascriptTemplate(VISIOANALYTICS_BASE.'/javascript/VisioAnalyticsTemplate.js', $visioAnalyticsTemplateData);
@@ -55,7 +65,7 @@ class VisioAnalyticsSiteTreeExtension extends Extension {
 
         if ($legalPage == NULL) {
 
-            $candidates = SiteTree::get()->filter('URLSegment:PartialMatch', ['legal','rechtlich','agb','datenschutz','disclaimer','privacy','dsgvo','gdpr']);
+            $candidates = SiteTree::get()->filter('URLSegment:PartialMatch', array('datenschutz','disclaimer','privacy','dsgvo','gdpr','legal','rechtlich','agb'));
 
             if (count($candidates) > 0) {
                 $legalPage = $candidates->First()->Link();

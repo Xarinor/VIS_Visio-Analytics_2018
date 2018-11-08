@@ -4,7 +4,7 @@
   z-index: 9999;
   padding: 10px 20px;
   min-width: 263px;
-  max-width: calc(60vw);
+  max-width: calc(100vw - 40px);
 }
 .visio-analytics-cookie-notice p,
 .visio-analytics-cookie-notice a,

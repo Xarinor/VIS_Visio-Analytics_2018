@@ -1,12 +1,13 @@
 ---
+# LICENSE
+# Copyright (C) 2018, Visionaer AG - Lukas Walliser (Xarinor) - All Rights Reserved
+# Unauthorized copying of this file, via any medium is strictly prohibited Proprietary and confidential
+# Written by Lukas Walliser <contact@lukas-walliser.ch>
 Name: visio-analytics
-After:
-  - 'framework/*'
-  - 'cms/*'
 ---
-Page_Controller:
+PageController:
   extensions:
-    - VisioAnalyticsSiteTreeExtension
-SiteConfig:
+    PageControllerExtension: VIS\analytics\SiteTreeExtension
+Silverstripe\SiteConfig\SiteConfig:
   extensions:
-    - VisioAnalyticsSiteConfigExtension
+    SiteConfigExtension: VIS\analytics\SiteConfigExtension
