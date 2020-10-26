@@ -22,6 +22,7 @@ class SiteTreeExtension extends Extension {
         $siteConfig = SiteConfig::current_site_config();
 
         $TrackingCode = $siteConfig->VATrackingCode ? $siteConfig->VATrackingCode : '';
+        $FBPCode = $siteConfig->FBPixelCode ? $siteConfig->FBPixelCode : null;
         $DisablePopup = $siteConfig->VADisablePopup ? $siteConfig->VADisablePopup : 0;
         $DisclaimerText = $siteConfig->VADisclaimerText ? $siteConfig->VADisclaimerText : _t('VisioAnalytics.FALLBACKDISCLAIMERTEXT','This website is using Cookies.');
         $AcceptText = $siteConfig->VAAcceptText ? $siteConfig->VAAcceptText : _t('VisioAnalytics.FALLBACKACCEPTTEXT','Accept');
@@ -34,6 +35,7 @@ class SiteTreeExtension extends Extension {
 
         $visioAnalyticsTemplateData = [
             'TrackingCode' => $TrackingCode,
+            'FBPCode' => $FBPCode,
             'DisablePopup' => $DisablePopup,
             'DisclaimerText' => $DisclaimerText,
             'AcceptText' => $AcceptText,
