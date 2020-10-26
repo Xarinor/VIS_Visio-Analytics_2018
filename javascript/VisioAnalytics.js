@@ -9,12 +9,13 @@
     var nsVisioAnalytics;
 
     nsVisioAnalytics = {
-        initVisioAnalytics: function (trackingCode) {
+        initVisioAnalytics: function (trackingCode, fbpCode = null) {
 
             var VATrackingCode = '';
             var htmlTrackingCode = $('html').html().match(/, ('UA-[0-9]{4,9}-[0-9]{1,4})/);
             trackingCode = trackingCode.match(/UA-[0-9]{4,9}-[0-9]{1,4}/);
             var htmlTagmanager = $('html').html().match(/GTM-[A-Z0-9]{2,20}/);
+            var FBPixelCode = fbpCode;
 
             if (htmlTagmanager != null) {
                 console.log('DSGVO: Tagmanager found ('+htmlTagmanager[0]+')');
@@ -33,14 +34,22 @@
                 VATrackingCode = htmlTrackingCode[1];
             } else {
                 console.log('DSGVO: No Analytics found');
-                return;
+                if (FBPixelCode == null) {
+                    return;
+                }
             }
 
+            <!-- Modified Analytics Code -->
             window.google_analytics_uacct = VATrackingCode[0]
             window.google_analytics_domain_name = "none";
 
             if (this.getConsent() == 'declined') {
-                console.log('Visio-Analytics: Analytics data link terminated');
+                if (trackingCode != null) {
+                    console.log('Visio-Analytics: Analytics data link terminated');
+                }
+                if (FBPixelCode != null) {
+                    console.log('Visio-Analytics: Facebook Pixel data link terminated');
+                }
                 window['ga-disable-' + VATrackingCode[0]] = true;
             }
 
@@ -53,15 +62,22 @@
             ga('create', VATrackingCode[0], 'auto');
             ga('set', 'anonymizeIp', true);
             ga('send', 'pageview');
+            <!-- END Modified Analytics Code -->
 
-            // Consent declined by default
-            // if (document.cookie.indexOf('VisioAnalyticsConsent' + '=true') > -1) {
-            //     console.log('Visio-Analytics: Consent for Analytics given - Analytics enabled');
-            // } else {
-            //     // Set disable cookie
-            //     doument.cookie = 'Visio-AnalyticsConsent' + '=false; expires=Sat, 01 Mar 2042 13:37:00 UTC; path=/';
-            // }
-
+            <!-- Modified Facebook Pixel Code -->
+            if (FBPixelCode != null && this.getConsent() != 'declined') {
+                !function(f,b,e,v,n,t,s)
+                {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+                    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+                    n.queue=[];t=b.createElement(e);t.async=!0;
+                    t.src=v;s=b.getElementsByTagName(e)[0];
+                    s.parentNode.insertBefore(t,s)}(window, document,'script',
+                    'https://connect.facebook.net/en_US/fbevents.js');
+                fbq('init', FBPixelCode);
+                fbq('track', 'PageView');
+            }
+            <!-- END Modified Facebook Pixel Code -->
         },
         getCookie: function (name) {
             var value = "; " + document.cookie;
