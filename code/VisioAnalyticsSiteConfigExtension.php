@@ -1,14 +1,17 @@
 <?php
 
 /**
- * Visio Analytics Settings Overwrite
- * Copyright (C) 2018, Visionaer AG
- * @author Lukas Walliser <contact@lukas-walliser.ch>
+ * LICENSE
+ * Copyright (C) 2018, Visionaer AG - Lukas Walliser (Xarinor) - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited Proprietary and confidential
+ * Written by Lukas Walliser <contact@lukas-walliser.ch>
  */
 class VisioAnalyticsSiteConfigExtension extends DataExtension {
 
     private static $db = array(
         'VATrackingCode' => 'Varchar(255)',
+        'G4TrackingCode' => 'Varchar(255)',
+        'awProperty' => 'Varchar(255)',
         'FBPixelCode' => 'Varchar(255)',
         'VADisablePopup' => 'Boolean',
         'VADisclaimerText' => 'HTMLText',
@@ -29,6 +32,8 @@ class VisioAnalyticsSiteConfigExtension extends DataExtension {
 
         $fields->addFieldToTab('Root.VisioAnalytics', FieldGroup::create(
             TextField::create('VATrackingCode', _t('VisioAnalytics.TRACKINGCODE', 'Tracking code')),
+            TextField::create('G4TrackingCode', _t('VisioAnalytics.G4TRACKINGCODE', 'G4 Tracking code')),
+            TextField::create('awProperty', _t('VisioAnalytics.AWTRACKINGCODE', 'AW Tracking code')),
             TextField::create('FBPixelCode', _t('VisioAnalytics.FBPIXELCODE', 'FB Pixel code')),
             NumericField::create('VAExpirationDays', _t('VisioAnalytics.EXPIRATIONDAYS', 'Cookie Expiration in days'))
         ));

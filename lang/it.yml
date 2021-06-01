@@ -1,6 +1,9 @@
-it_IT:
+it:
   VisioAnalytics:
     TRACKINGCODE: 'Google Analytics Tracking Code'
+    G4TRACKINGCODE: 'G4 Analytics Tracking Code'
+    AWTRACKINGCODE: 'Adwords Code'
+    FBPIXELCODE: 'Facebook Pixel Code'
     DISABLEPOPUP: 'Disable Cookie Popup'
     DISCLAIMERTEXT: 'Popup content text'
     ACCEPTTEXT: 'Opt-In Text'

@@ -1,9 +1,10 @@
 <?php
 
 /**
- * Visio Analytics include Extension
- * Copyright (C) 2018, Visionaer AG
- * @author Lukas Walliser <contact@lukas-walliser.ch>
+ * LICENSE
+ * Copyright (C) 2018, Visionaer AG - Lukas Walliser (Xarinor) - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited Proprietary and confidential
+ * Written by Lukas Walliser <contact@lukas-walliser.ch>
  */
 class VisioAnalyticsSiteTreeExtension extends Extension {
 
@@ -11,7 +12,9 @@ class VisioAnalyticsSiteTreeExtension extends Extension {
 
         $siteConfig = SiteConfig::current_site_config();
 
-        $TrackingCode = $siteConfig->VATrackingCode ? $siteConfig->VATrackingCode : '';
+        $TrackingCode = $siteConfig->VATrackingCode ? $siteConfig->VATrackingCode : null;
+        $G4TrackingCode = $siteConfig->G4TrackingCode ? $siteConfig->G4TrackingCode : null;
+        $awProperty = $siteConfig->awProperty ? $siteConfig->awProperty : null;
         $FBPCode = $siteConfig->FBPixelCode ? $siteConfig->FBPixelCode : null;
         $DisablePopup = $siteConfig->VADisablePopup ? $siteConfig->VADisablePopup : 0;
         $DisclaimerText = $siteConfig->VADisclaimerText ? $siteConfig->VADisclaimerText : _t('VisioAnalytics.FALLBACKDISCLAIMERTEXT','This website is using Cookies.');
@@ -25,6 +28,8 @@ class VisioAnalyticsSiteTreeExtension extends Extension {
 
         $visioAnalyticsTemplateData = array(
             'TrackingCode' => $TrackingCode,
+            'G4TrackingCode' => $G4TrackingCode,
+            'awProperty' => $awProperty,
             'FBPCode' => $FBPCode,
             'DisablePopup' => $DisablePopup,
             'DisclaimerText' => $DisclaimerText,
