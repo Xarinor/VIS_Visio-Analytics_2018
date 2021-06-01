@@ -1,7 +1,10 @@
-de_DE:
+de:
   VisioAnalytics:
     # CMS Strings
     TRACKINGCODE: 'Google Analytics Tracking Code'
+    G4TRACKINGCODE: 'G4 Analytics Tracking Code'
+    AWTRACKINGCODE: 'Adwords Code'
+    FBPIXELCODE: 'Facebook Pixel Code'
     DISABLEPOPUP: 'Cookie-Banner deaktiviert'
     DISCLAIMERTEXT: 'Popup Nachricht'
     ACCEPTTEXT: 'Opt-In Text'

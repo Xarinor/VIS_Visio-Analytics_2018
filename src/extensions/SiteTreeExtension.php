@@ -21,7 +21,9 @@ class SiteTreeExtension extends Extension {
 
         $siteConfig = SiteConfig::current_site_config();
 
-        $TrackingCode = $siteConfig->VATrackingCode ? $siteConfig->VATrackingCode : '';
+        $TrackingCode = $siteConfig->VATrackingCode ? $siteConfig->VATrackingCode : null;
+        $G4TrackingCode = $siteConfig->G4TrackingCode ? $siteConfig->G4TrackingCode : null;
+        $awProperty = $siteConfig->awProperty ? $siteConfig->awProperty : null;
         $FBPCode = $siteConfig->FBPixelCode ? $siteConfig->FBPixelCode : null;
         $DisablePopup = $siteConfig->VADisablePopup ? $siteConfig->VADisablePopup : 0;
         $DisclaimerText = $siteConfig->VADisclaimerText ? $siteConfig->VADisclaimerText : _t('VisioAnalytics.FALLBACKDISCLAIMERTEXT','This website is using Cookies.');
@@ -35,6 +37,8 @@ class SiteTreeExtension extends Extension {
 
         $visioAnalyticsTemplateData = [
             'TrackingCode' => $TrackingCode,
+            'G4TrackingCode' => $G4TrackingCode,
+            'awProperty' => $awProperty,
             'FBPCode' => $FBPCode,
             'DisablePopup' => $DisablePopup,
             'DisclaimerText' => $DisclaimerText,
@@ -67,7 +71,7 @@ class SiteTreeExtension extends Extension {
 
         if ($legalPage == NULL) {
 
-            $candidates = SiteTree::get()->filter('URLSegment:PartialMatch', array('datenschutz','disclaimer','privacy','dsgvo','gdpr','legal','rechtlich','agb'));
+            $candidates = SiteTree::get()->filter('URLSegment:PartialMatch', ['datenschutz','disclaimer','privacy','dsgvo','gdpr','legal','rechtlich','agb']);
 
             if (count($candidates) > 0) {
                 $legalPage = $candidates->First()->Link();

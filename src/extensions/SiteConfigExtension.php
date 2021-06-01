@@ -22,6 +22,8 @@ class SiteConfigExtension extends DataExtension {
 
     private static $db = [
         'VATrackingCode' => 'Varchar(255)',
+        'G4TrackingCode' => 'Varchar(255)',
+        'awProperty' => 'Varchar(255)',
         'FBPixelCode' => 'Varchar(255)',
         'VADisablePopup' => 'Boolean',
         'VADisclaimerText' => 'HTMLText',
@@ -42,6 +44,8 @@ class SiteConfigExtension extends DataExtension {
 
         $fields->addFieldToTab('Root.VisioAnalytics', FieldGroup::create(
             TextField::create('VATrackingCode', _t('VisioAnalytics.TRACKINGCODE', 'Tracking code')),
+            TextField::create('G4TrackingCode', _t('VisioAnalytics.G4TRACKINGCODE', 'G4 Tracking code')),
+            TextField::create('awProperty', _t('VisioAnalytics.AWTRACKINGCODE', 'AW Tracking code')),
             TextField::create('FBPixelCode', _t('VisioAnalytics.FBPIXELCODE', 'FB Pixel code')),
             NumericField::create('VAExpirationDays', _t('VisioAnalytics.EXPIRATIONDAYS', 'Cookie Expiration in days'))
         ));

@@ -1,6 +1,9 @@
-en_GB:
+fr:
   VisioAnalytics:
     TRACKINGCODE: 'Google Analytics Tracking Code'
+    G4TRACKINGCODE: 'G4 Analytics Tracking Code'
+    AWTRACKINGCODE: 'Adwords Code'
+    FBPIXELCODE: 'Facebook Pixel Code'
     DISABLEPOPUP: 'Disable Cookie Popup'
     DISCLAIMERTEXT: 'Popup content text'
     ACCEPTTEXT: 'Opt-In Text'
@@ -20,8 +23,8 @@ en_GB:
     POSBOTTOMRIGHT: 'Bottom right'
     EXPIRATIONDAYS: 'Expiration time in days'
     # Content Fallbacks for quick install
-    FALLBACKDISCLAIMERTEXT: 'We use essential cookies and analysis tools only to improve the user experience on this website.'
-    FALLBACKACCEPTTEXT: 'Continue'
-    FALLBACKDECLINETEXT: 'Disable'
-    FALLBACKMORETEXT: 'More details'
+    FALLBACKDISCLAIMERTEXT: 'Nous utilisons des cookies néccessaires pour assurer la fonctionalité optimale de ce site web.'
+    FALLBACKACCEPTTEXT: 'D’accord'
+    FALLBACKDECLINETEXT: 'Pas d’accord'
+    FALLBACKMORETEXT: 'Lire plus'
     FALLBACKMOREURL: 'https://www.visionaer.swiss/cookie-policy'
