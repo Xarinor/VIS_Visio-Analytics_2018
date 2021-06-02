@@ -71,7 +71,7 @@ class SiteTreeExtension extends Extension {
 
         if ($legalPage == NULL) {
 
-            $candidates = SiteTree::get()->filter('URLSegment:PartialMatch', ['datenschutz','disclaimer','privacy','dsgvo','gdpr','legal','rechtlich','agb']);
+            $candidates = SiteTree::get()->filter('URLSegment:PartialMatch', ['datenschutz','disclaimer','privacy','dsgvo','gdpr']);
 
             if (count($candidates) > 0) {
                 $legalPage = $candidates->First()->Link();
