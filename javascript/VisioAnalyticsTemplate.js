@@ -16,7 +16,7 @@ $(window).on('load', function(){
             declineText: "$DeclineText",
             moreText: "$MoreText",
             moreURL: "$MoreURL",
-            moreNewTab: $MoreNewTab,
+            moreNewTab: "$MoreNewTab",
             position: "$Position",
             expirationDays: '$ExpirationDays',
             backgroundColor: '$BackgroundColor',

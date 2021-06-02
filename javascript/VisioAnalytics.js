@@ -13,8 +13,8 @@
 
             var VATrackingCode = '';
             var VAG4TrackingCode = '';
-            var htmlTrackingCode = $('html').html().match(/, ('UA-[0-9]{4,9}-[0-9]{1,4})/);
-            var htmlG4TrackingCode = $('html').html().match(/, ('G-[A-Z0-9]{8,12})/);
+            var htmlTrackingCode = $('html').html().match(/'UA-[0-9]{4,9}-[0-9]{1,4}'/);
+            var htmlG4TrackingCode = $('html').html().match(/'G-[A-Z0-9]{8,12}'/);
             var htmlTagmanager = $('html').html().match(/GTM-[A-Z0-9]{2,20}/);
             trackingCode = trackingCode.match(/UA-[0-9]{4,9}-[0-9]{1,4}/);
             G4TrackingCode = G4TrackingCode.match(/G-[A-Z0-9]{8,12}/);
@@ -24,22 +24,22 @@
                 console.log('DSGVO: Tagmanager found ('+htmlTagmanager[0]+')');
             }
             if (trackingCode != null || G4TrackingCode != null) {
-                if (htmlTrackingCode != null) {
+                if (trackingCode != null && htmlTrackingCode[1] != null) {
                     console.log('DSGVO: Please remove Leftover snippet ('+htmlTrackingCode[1]+')');
                 }
-                if (htmlG4TrackingCode != null) {
+                if (G4TrackingCode != null && htmlG4TrackingCode[1] != null) {
                     console.log('DSGVO: Please remove Leftover snippet ('+htmlG4TrackingCode[1]+')');
                 }
-                VATrackingCode = trackingCode;
-                VAG4TrackingCode = G4TrackingCode;
-            } else if (htmlTrackingCode != null || htmlG4TrackingCode != null) {
+                VATrackingCode = trackingCode[0];
+                VAG4TrackingCode = G4TrackingCode[0];
+            } else if (htmlTrackingCode[0] != null || htmlG4TrackingCode[0] != null) {
                 console.log('DSGVO: Using Analytics Snippet');
                 var anonymized = $('html').html().match(/'anonymize[_]?[iI]p'[,:] true/);
                 if (anonymized == null) {
                     console.log('DSGVO: Missing IP Anonymization')
                 }
-                VATrackingCode = htmlTrackingCode[1];
-                VAG4TrackingCode = htmlG4TrackingCode[1];
+                VATrackingCode = htmlTrackingCode[0];
+                VAG4TrackingCode = htmlG4TrackingCode[0];
             } else {
                 console.log('DSGVO: No Analytics found');
                 if (FBPixelCode == null && awProperty == null) {
@@ -48,7 +48,7 @@
             }
 
             <!-- Modified Analytics Code -->
-            window.google_analytics_uacct = VATrackingCode[0]
+            window.google_analytics_uacct = VATrackingCode;
             window.google_analytics_domain_name = "none";
 
             if (this.getConsent() == 'declined') {
@@ -61,26 +61,31 @@
                 if (awProperty != null) {
                     console.log('Visio-Analytics: Adwords data link terminated');
                 }
-                window['ga-disable-' + VATrackingCode[0]] = true;
+                window['ga-disable-' + VATrackingCode] = true;
             }
 
-            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://www." : "http://www.");
             var gaScript = document.createElement('script');
-            gaScript.src = gaJsHost + 'googletagmanager.com/gtag/js?id=' + VATrackingCode[0] ? VATrackingCode[0] : G4TrackingCode;
+            gaScript.src = gaJsHost + 'googletagmanager.com/gtag/js?id=';
+            if (VAG4TrackingCode != null) {
+                gaScript.src += VAG4TrackingCode;
+            } else if (VATrackingCode != null) {
+                gaScript.src += VATrackingCode;
+            }
             document.body.appendChild(gaScript);
 
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
 
-            if (VATrackingCode[0] != null) {
-                gtag('config', VATrackingCode[0], {
+            if (VATrackingCode != null) {
+                gtag('config', VATrackingCode, {
                     'anonymize_ip': true
                 });
             }
 
-            if (G4TrackingCode != null) {
-                gtag('config', G4TrackingCode, {
+            if (VAG4TrackingCode != null) {
+                gtag('config', VAG4TrackingCode, {
                     'anonymize_ip': true
                 });
             }
@@ -95,11 +100,10 @@
                     'anonymize_ip': true
                 });
             }
-
             <!-- END Modified Analytics Code -->
 
             <!-- Modified Facebook Pixel Code -->
-            if (FBPixelCode != null && this.getConsent() != 'declined') {
+            if (FBPixelCode && this.getConsent() != 'declined') {
                 !function(f,b,e,v,n,t,s)
                 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
                     n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -239,7 +243,6 @@
         };
 
         var VisioAnalyticsCookieNoticePopup = {
-
             init : function(config) {
                 overwriteConfig(config);
 
