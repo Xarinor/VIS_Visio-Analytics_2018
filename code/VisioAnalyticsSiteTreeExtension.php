@@ -62,7 +62,7 @@ class VisioAnalyticsSiteTreeExtension extends Extension {
 
         if ($legalPage == NULL) {
 
-            $candidates = SiteTree::get()->filter('URLSegment:PartialMatch', ['legal','rechtlich','agb','datenschutz','disclaimer','privacy','dsgvo','gdpr']);
+            $candidates = SiteTree::get()->filter('URLSegment:PartialMatch', ['datenschutz','disclaimer','privacy','dsgvo','gdpr']);
 
             if (count($candidates) > 0) {
                 $legalPage = $candidates->First()->Link();
