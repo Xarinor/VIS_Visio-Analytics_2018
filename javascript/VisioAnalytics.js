@@ -24,14 +24,18 @@
                 console.log('DSGVO: Tagmanager found ('+htmlTagmanager[0]+')');
             }
             if (trackingCode != null || G4TrackingCode != null) {
-                if (trackingCode != null && htmlTrackingCode[1] != null) {
-                    console.log('DSGVO: Please remove Leftover snippet ('+htmlTrackingCode[1]+')');
+                if (trackingCode != null) {
+                    if (htmlTrackingCode[1] != null) {
+                        VATrackingCode = trackingCode[0];
+                        console.log('DSGVO: Please remove Leftover snippet ('+htmlTrackingCode[1]+')');
+                    }
                 }
-                if (G4TrackingCode != null && htmlG4TrackingCode[1] != null) {
-                    console.log('DSGVO: Please remove Leftover snippet ('+htmlG4TrackingCode[1]+')');
+                if (G4TrackingCode != null) {
+                    if (htmlG4TrackingCode[1] != null) {
+                        VAG4TrackingCode = G4TrackingCode[0];
+                        console.log('DSGVO: Please remove Leftover snippet ('+htmlG4TrackingCode[1]+')');
+                    }
                 }
-                VATrackingCode = trackingCode[0];
-                VAG4TrackingCode = G4TrackingCode[0];
             } else if (htmlTrackingCode[0] != null || htmlG4TrackingCode[0] != null) {
                 console.log('DSGVO: Using Analytics Snippet');
                 var anonymized = $('html').html().match(/'anonymize[_]?[iI]p'[,:] true/);
