@@ -11,8 +11,8 @@
     nsVisioAnalytics = {
         initVisioAnalytics: function (trackingCode = null, G4TrackingCode = null, awProperty = null, fbpCode = null) {
 
-            var VATrackingCode = '';
-            var VAG4TrackingCode = '';
+            var VATrackingCode = null;
+            var VAG4TrackingCode = null;
             var htmlTrackingCode = $('html').html().match(/'UA-[0-9]{4,9}-[0-9]{1,4}'/);
             var htmlG4TrackingCode = $('html').html().match(/'G-[A-Z0-9]{8,12}'/);
             var htmlTagmanager = $('html').html().match(/GTM-[A-Z0-9]{2,20}/);
@@ -25,14 +25,14 @@
             }
             if (trackingCode != null || G4TrackingCode != null) {
                 if (trackingCode != null) {
+                    VATrackingCode = trackingCode[0] != '' ? trackingCode[0] : null;
                     if (htmlTrackingCode[1] != null) {
-                        VATrackingCode = trackingCode[0];
                         console.log('DSGVO: Please remove Leftover snippet ('+htmlTrackingCode[1]+')');
                     }
                 }
                 if (G4TrackingCode != null) {
+                    VAG4TrackingCode = G4TrackingCode[0] != '' ? G4TrackingCode[0] : null;
                     if (htmlG4TrackingCode[1] != null) {
-                        VAG4TrackingCode = G4TrackingCode[0];
                         console.log('DSGVO: Please remove Leftover snippet ('+htmlG4TrackingCode[1]+')');
                     }
                 }
