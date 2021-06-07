@@ -7,7 +7,7 @@ Name: visio-analytics
 ---
 PageController:
   extensions:
-    PageControllerExtension: VIS\analytics\SiteTreeExtension
+    VisioAnalyticsPageControllerExtension: VIS\analytics\SiteTreeExtension
 Silverstripe\SiteConfig\SiteConfig:
   extensions:
-    SiteConfigExtension: VIS\analytics\SiteConfigExtension
+    VisioAnalyticsSiteConfigExtension: VIS\analytics\SiteConfigExtension
