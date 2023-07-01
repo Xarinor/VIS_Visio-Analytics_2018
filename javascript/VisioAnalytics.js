@@ -23,26 +23,18 @@
             if (htmlTagmanager != null) {
                 console.log('DSGVO: Tagmanager found ('+htmlTagmanager[0]+')');
             }
-            if (trackingCode != null || G4TrackingCode != null) {
-                if (trackingCode != null) {
-                    VATrackingCode = trackingCode[0] != '' ? trackingCode[0] : null;
-                    if (htmlTrackingCode[1] != null) {
-                        console.log('DSGVO: Please remove Leftover snippet ('+htmlTrackingCode[1]+')');
-                    }
+            if (trackingCode != null && G4TrackingCode == null) {
+                console.log('DSGVO: Only Universal Analytics provided, add GA4 Property.');
+            } else if (G4TrackingCode != null) {
+                VAG4TrackingCode = G4TrackingCode[0] != '' ? G4TrackingCode[0] : null;
+                if (htmlTrackingCode[1] != null) {
+                    console.log('DSGVO: Please remove Leftover snippet ('+htmlTrackingCode[1]+')');
                 }
-                if (G4TrackingCode != null) {
-                    VAG4TrackingCode = G4TrackingCode[0] != '' ? G4TrackingCode[0] : null;
-                    if (htmlG4TrackingCode[1] != null) {
-                        console.log('DSGVO: Please remove Leftover snippet ('+htmlG4TrackingCode[1]+')');
-                    }
+                if (htmlG4TrackingCode[1] != null) {
+                    console.log('DSGVO: Please remove Leftover snippet ('+htmlG4TrackingCode[1]+')');
                 }
-            } else if (htmlTrackingCode[0] != null || htmlG4TrackingCode[0] != null) {
-                console.log('DSGVO: Using Analytics Snippet');
-                var anonymized = $('html').html().match(/'anonymize[_]?[iI]p'[,:] true/);
-                if (anonymized == null) {
-                    console.log('DSGVO: Missing IP Anonymization')
-                }
-                VATrackingCode = htmlTrackingCode[0];
+            } else if (htmlG4TrackingCode[0] != null) {
+                console.log('DSGVO: Using GA4 Analytics Snippet');
                 VAG4TrackingCode = htmlG4TrackingCode[0];
             } else {
                 console.log('DSGVO: No Analytics found');
@@ -73,20 +65,12 @@
             gaScript.src = gaJsHost + 'googletagmanager.com/gtag/js?id=';
             if (VAG4TrackingCode != null) {
                 gaScript.src += VAG4TrackingCode;
-            } else if (VATrackingCode != null) {
-                gaScript.src += VATrackingCode;
             }
             document.body.appendChild(gaScript);
 
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-
-            if (VATrackingCode != null) {
-                gtag('config', VATrackingCode, {
-                    'anonymize_ip': true
-                });
-            }
 
             if (VAG4TrackingCode != null) {
                 gtag('config', VAG4TrackingCode, {
@@ -97,7 +81,8 @@
             if (this.getConsent() == 'declined' && awProperty != null) {
                 gtag('config', awProperty, {
                     'anonymize_ip': true,
-                    'storeGac': false
+                    'storeGac': false,
+                    'store_gac': false
                 });
             } else if (awProperty != null) {
                 gtag('config', awProperty, {
