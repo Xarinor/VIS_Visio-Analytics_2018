@@ -11,14 +11,14 @@
     nsVisioAnalytics = {
         initVisioAnalytics: function (trackingCode = null, G4TrackingCode = null, awProperty = null, fbpCode = null) {
 
-            var VATrackingCode = null;
-            var VAG4TrackingCode = null;
-            var htmlTrackingCode = $('html').html().match(/'UA-[0-9]{4,9}-[0-9]{1,4}'/);
-            var htmlG4TrackingCode = $('html').html().match(/'G-[A-Z0-9]{8,12}'/);
-            var htmlTagmanager = $('html').html().match(/GTM-[A-Z0-9]{2,20}/);
+            let VATrackingCode = null;
+            let VAG4TrackingCode = null;
+            const htmlTrackingCode = $('html').html().match(/'UA-[0-9]{4,9}-[0-9]{1,4}'/);
+            const htmlG4TrackingCode = $('html').html().match(/'G-[A-Z0-9]{8,12}'/);
+            const htmlTagmanager = $('html').html().match(/GTM-[A-Z0-9]{2,20}/);
             trackingCode = trackingCode.match(/UA-[0-9]{4,9}-[0-9]{1,4}/);
             G4TrackingCode = G4TrackingCode.match(/G-[A-Z0-9]{8,12}/);
-            var FBPixelCode = fbpCode;
+            let FBPixelCode = fbpCode;
 
             if (htmlTagmanager != null) {
                 console.log('DSGVO: Tagmanager found ('+htmlTagmanager[0]+')');
@@ -27,13 +27,13 @@
                 console.log('DSGVO: Only Universal Analytics provided, add GA4 Property.');
             } else if (G4TrackingCode != null) {
                 VAG4TrackingCode = G4TrackingCode[0] != '' ? G4TrackingCode[0] : null;
-                if (htmlTrackingCode[1] != null) {
-                    console.log('DSGVO: Please remove Leftover snippet ('+htmlTrackingCode[1]+')');
+                if (htmlTrackingCode != null) {
+                    console.log('DSGVO: Please remove Leftover UA-snippet ('+htmlTrackingCode[0]+')');
                 }
-                if (htmlG4TrackingCode[1] != null) {
-                    console.log('DSGVO: Please remove Leftover snippet ('+htmlG4TrackingCode[1]+')');
+                if (htmlG4TrackingCode != null) {
+                    console.log('DSGVO: Please remove Leftover GA4-snippet ('+htmlG4TrackingCode[0]+')');
                 }
-            } else if (htmlG4TrackingCode[0] != null) {
+            } else if (htmlG4TrackingCode != null) {
                 console.log('DSGVO: Using GA4 Analytics Snippet');
                 VAG4TrackingCode = htmlG4TrackingCode[0];
             } else {
@@ -73,6 +73,7 @@
             gtag('js', new Date());
 
             if (VAG4TrackingCode != null) {
+                console.log('Visio-Analytics: Tracking GA4 Code');
                 gtag('config', VAG4TrackingCode, {
                     'anonymize_ip': true
                 });
