@@ -9,29 +9,31 @@
     var nsVisioAnalytics;
 
     nsVisioAnalytics = {
-        initVisioAnalytics: function (trackingCode = null, G4TrackingCode = null, awProperty = null, fbpCode = null) {
+        initVisioAnalytics: function (G4TrackingCode = null, awProperty = null, fbpCode = null) {
 
-            let VATrackingCode = null;
             let VAG4TrackingCode = null;
-            const htmlTrackingCode = $('html').html().match(/'UA-[0-9]{4,9}-[0-9]{1,4}'/);
-            const htmlG4TrackingCode = $('html').html().match(/'G-[A-Z0-9]{8,12}'/);
+            const htmlTrackingCode = $('html').html().match(/'UA-[0-9]{4,9}-[0-9]{1,4}'/g);
+            const htmlG4TrackingCode = $('html').html().match(/'G-[A-Z0-9]{8,12}'/g);
             const htmlTagmanager = $('html').html().match(/GTM-[A-Z0-9]{2,20}/);
-            trackingCode = trackingCode.match(/UA-[0-9]{4,9}-[0-9]{1,4}/);
-            G4TrackingCode = G4TrackingCode.match(/G-[A-Z0-9]{8,12}/);
+            G4TrackingCode = G4TrackingCode != null ? G4TrackingCode.match(/G-[A-Z0-9]{8,12}/) : null;
             let FBPixelCode = fbpCode;
 
             if (htmlTagmanager != null) {
                 console.log('DSGVO: Tagmanager found ('+htmlTagmanager[0]+')');
             }
-            if (trackingCode != null && G4TrackingCode == null) {
-                console.log('DSGVO: Only Universal Analytics provided, add GA4 Property.');
+
+            if (htmlTrackingCode != null) {
+                console.log('DSGVO: Please remove Leftover UA-snippet');
+            }
+
+            if (htmlG4TrackingCode != null && G4TrackingCode == null) {
+                console.log('DSGVO: Remove GA4 Snippet and add the code to the CMS settings.');
+            } else if (G4TrackingCode == null) {
+                console.log('DSGVO: Add GA4 Property.');
             } else if (G4TrackingCode != null) {
                 VAG4TrackingCode = G4TrackingCode[0] != '' ? G4TrackingCode[0] : null;
-                if (htmlTrackingCode != null) {
-                    console.log('DSGVO: Please remove Leftover UA-snippet ('+htmlTrackingCode[0]+')');
-                }
-                if (htmlG4TrackingCode != null) {
-                    console.log('DSGVO: Please remove Leftover GA4-snippet ('+htmlG4TrackingCode[0]+')');
+                if (htmlG4TrackingCode != null && Array.isArray(htmlG4TrackingCode) && (htmlG4TrackingCode.includes(VAG4TrackingCode) || htmlG4TrackingCode.length > 1)) {
+                    console.log('DSGVO: Please remove Leftover GA4-snippet');
                 }
             } else if (htmlG4TrackingCode != null) {
                 console.log('DSGVO: Using GA4 Analytics Snippet');
@@ -44,51 +46,41 @@
             }
 
             <!-- Modified Analytics Code -->
-            window.google_analytics_uacct = VATrackingCode;
-            window.google_analytics_domain_name = "none";
-
             if (this.getConsent() == 'declined') {
-                if (trackingCode != null) {
-                    console.log('Visio-Analytics: Analytics data link terminated');
-                }
                 if (FBPixelCode != null) {
                     console.log('Visio-Analytics: Facebook Pixel data link terminated');
                 }
                 if (awProperty != null) {
                     console.log('Visio-Analytics: Adwords data link terminated');
                 }
-                window['ga-disable-' + VATrackingCode] = true;
             }
-
-            var gaJsHost = (("https:" == document.location.protocol) ? "https://www." : "http://www.");
-            var gaScript = document.createElement('script');
-            gaScript.src = gaJsHost + 'googletagmanager.com/gtag/js?id=';
             if (VAG4TrackingCode != null) {
-                gaScript.src += VAG4TrackingCode;
-            }
-            document.body.appendChild(gaScript);
+                var gaJsHost = (("https:" == document.location.protocol) ? "https://www." : "http://www.");
+                var gaScript = document.createElement('script');
+                gaScript.src = gaJsHost + 'googletagmanager.com/gtag/js?id=' + VAG4TrackingCode;
 
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
+                document.body.appendChild(gaScript);
 
-            if (VAG4TrackingCode != null) {
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+
                 console.log('Visio-Analytics: Tracking GA4 Code');
                 gtag('config', VAG4TrackingCode, {
                     'anonymize_ip': true
                 });
-            }
 
-            if (this.getConsent() == 'declined' && awProperty != null) {
-                gtag('config', awProperty, {
-                    'anonymize_ip': true,
-                    'storeGac': false,
-                    'store_gac': false
-                });
-            } else if (awProperty != null) {
-                gtag('config', awProperty, {
-                    'anonymize_ip': true
-                });
+                if (this.getConsent() == 'declined' && awProperty != null) {
+                    gtag('config', awProperty, {
+                        'anonymize_ip': true,
+                        'storeGac': false,
+                        'store_gac': false
+                    });
+                } else if (awProperty != null) {
+                    gtag('config', awProperty, {
+                        'anonymize_ip': true
+                    });
+                }
             }
             <!-- END Modified Analytics Code -->
 
