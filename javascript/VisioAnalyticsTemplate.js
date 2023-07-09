@@ -8,7 +8,7 @@
 
 $(window).on('load', function(){
 
-    visioAnalytics.initVisioAnalytics('$TrackingCode', '$G4TrackingCode', '$awProperty', '$FBPCode');
+    visioAnalytics.initVisioAnalytics('$G4TrackingCode', '$awProperty', '$FBPCode');
     if (visioAnalytics.getConsent() == false && $DisablePopup != 1) {
         $(document).VisioAnalyticsCookieNotice().init({
             disclaimerText: "$DisclaimerText",

@@ -43,7 +43,6 @@ class SiteConfigExtension extends DataExtension {
     public function updateCMSFields(FieldList $fields) {
 
         $fields->addFieldToTab('Root.VisioAnalytics', FieldGroup::create(
-            TextField::create('VATrackingCode', _t('VisioAnalytics.TRACKINGCODE', 'Tracking code')),
             TextField::create('G4TrackingCode', _t('VisioAnalytics.G4TRACKINGCODE', 'G4 Tracking code')),
             TextField::create('awProperty', _t('VisioAnalytics.AWTRACKINGCODE', 'AW Tracking code')),
             TextField::create('FBPixelCode', _t('VisioAnalytics.FBPIXELCODE', 'FB Pixel code')),
